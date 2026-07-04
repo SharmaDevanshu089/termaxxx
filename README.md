@@ -68,10 +68,22 @@ npm run dev
 ```
 
 ### Build Production Bundle
-Bundles the React frontend and compiles the optimized native executable binary target (MSI/EXE on Windows, AppImage/DEB on Linux, DMG on macOS):
+Bundles the React frontend and compiles the optimized native executable binary target (MSI/EXE on Windows, AppImage/DEB on Linux):
 ```bash
 npm run build
 ```
+
+### CI/CD Release Pipeline
+We have configured a **GitHub Actions** release workflow at `.github/workflows/release.yml`. To trigger a build and automatically generate release binaries:
+1. Tag your git commit (e.g. `v1.0.0`):
+   ```bash
+   git tag v1.0.0
+   ```
+2. Push the tags to GitHub:
+   ```bash
+   git push origin v1.0.0
+   ```
+The workflow will compile the MSVC binary for Windows (`.msi`, `.exe`) and the Debian/AppImage binaries for Linux, drafting a release with all installer files automatically.
 
 ---
 
