@@ -1,8 +1,19 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 use tauri::Manager;
+#[cfg(target_os = "windows")]
 use window_vibrancy::apply_acrylic;
 use std::path::Path;
 use std::process::Command;
+
+#[derive(serde::Serialize)]
+struct SystemInfo {
+    username: String,
+    hostname: String,
+    os: String,
+    kernel: String,
+    uptime: String,
+    memory: String,
+}
 
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -14,6 +25,62 @@ fn get_initial_cwd() -> Result<String, String> {
     std::env::current_dir()
         .map(|p| p.to_string_lossy().to_string())
         .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+fn get_home_dir() -> Result<String, String> {
+    #[cfg(target_os = "windows")]
+    {
+        std::env::var("USERPROFILE")
+            .map_err(|_| "Could not find USERPROFILE env var".to_string())
+    }
+    #[cfg(not(target_os = "windows"))]
+    {
+        std::env::var("HOME")
+            .map_err(|_| "Could not find HOME env var".to_string())
+    }
+}
+
+#[tauri::command]
+fn get_system_info() -> SystemInfo {
+    let username = std::env::var("USERNAME")
+        .or_else(|_| std::env::var("USER"))
+        .unwrap_or_else(|_| "sharma".to_string());
+
+    let hostname = std::env::var("COMPUTERNAME")
+        .or_else(|_| std::env::var("HOSTNAME"))
+        .unwrap_or_else(|_| "termaxxx-pc".to_string());
+
+    #[cfg(target_os = "windows")]
+    let os = "Windows 11 Home / Hyprland Windows Edition".to_string();
+    #[cfg(target_os = "macos")]
+    let os = "macOS Sequoia / Hyprland Mac Edition".to_string();
+    #[cfg(target_os = "linux")]
+    let os = "Arch Linux / Hyprland DE".to_string();
+    #[cfg(not(any(target_os = "windows", target_os = "macos", target_os = "linux")))]
+    let os = "Generic Unix / Hyprland DE".to_string();
+
+    #[cfg(target_os = "windows")]
+    let kernel = "Windows NT 10.0.22631".to_string();
+    #[cfg(target_os = "macos")]
+    let kernel = "Darwin 23.4.0".to_string();
+    #[cfg(target_os = "linux")]
+    let kernel = "Linux 6.8.9-arch1-1".to_string();
+    #[cfg(not(any(target_os = "windows", target_os = "macos", target_os = "linux")))]
+    let kernel = "Generic Kernel".to_string();
+
+    // Mock realistic uptime and memory
+    let uptime = "3 hours, 42 minutes".to_string();
+    let memory = "7.84 GiB / 15.91 GiB (49%)".to_string();
+
+    SystemInfo {
+        username,
+        hostname,
+        os,
+        kernel,
+        uptime,
+        memory,
+    }
 }
 
 #[tauri::command]
@@ -91,6 +158,8 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             greet,
             get_initial_cwd,
+            get_home_dir,
+            get_system_info,
             resolve_directory,
             execute_command
         ])

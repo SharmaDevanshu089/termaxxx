@@ -1,11 +1,11 @@
-/* @import "../../variable.css"; */
-
 .Titlebar-window {
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.01);
     display: flex;
     align-items: center;
     justify-content: flex-end;
     height: 48px; /* Windows 11 natural titlebar height */
+    padding-right: 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04); /* Subtle Fluent-style reflection divider */
 }
 
 .Titlebar-window button {
@@ -14,7 +14,7 @@
     padding: 0;
     margin: 0;
     min-width: 0;
-    color: white;
+    color: #c0bfbc; /* GNOME muted label gray default */
     font-family: monospace;
     font-size: 14px;
     width: 46px; /* Windows 11 standard button width */
@@ -28,89 +28,20 @@
 }
 
 .Titlebar-window button:not(:last-child):hover {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: rgba(53, 132, 228, 0.12); /* GNOME Blue hover highlight */
+    color: #faf5f5;
 }
 
 .Titlebar-window button:last-child:hover {
-    background-color: #e81123;
+    background-color: #e81123; /* Windows 11 style red close hover */
     color: #ffffff;
 }
 
 .Titlebar-window button:active {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(53, 132, 228, 0.25);
 }
 
 .Titlebar-window button:last-child:active {
     background-color: #f1707a;
     color: #000000;
-}
-
-
-
-
-/* const themePalette = [
-  "hsl(38, 15%, 94%)", "hsl(215, 10%, 65%)", "hsl(145, 85%, 55%)", "hsl(0, 85%, 55%)",
-  "hsl(38, 85%, 55%)", "hsl(215, 12%, 15%)", "hsl(215, 12%, 8%)"
-]; // Order: Text, Muted, Success, Error, Amber Accent, Sidebar, Canvas Base */
-
-:root {
-    /* ==========================================================================
-     1. Core Base Values (Your Original Theme Variables)
-     ========================================================================== */
-    --primary-text: hsl(38, 15%, 94%);
-    --primary-muted: hsl(215, 10%, 65%);
-    --primary-sucess: hsl(145, 85%, 55%);
-    --primary-error: hsl(0, 85%, 55%);
-    --primary-accent: hsl(38, 85%, 55%);
-    /* Core Amber Accent */
-    --primary-sidebar: hsl(30, 13%, 9%);
-    --primary-background: hsl(24, 8%, 12%);
-    --primary-topbar: hsl(215, 12%, 12%);
-    --primary-border: rgba(255, 255, 255, 0.05);
-
-    /* ==========================================================================
-     2. Expanded Structural Layout & Elevation (For grid items & folders)
-     ========================================================================== */
-    /* Elevation layers to lift panels out of the background */
-    --surface-low: hsl(215, 12%, 12%);
-    /* Sunken surfaces */
-    --surface-card: hsl(215, 12%, 18%);
-    /* Standard card/folder grid item */
-    --surface-card-hover: hsl(215, 12%, 22%);
-    /* Hovering over a file/folder */
-
-    /* Interactivity on Sidebar items */
-    --sidebar-item-hover: rgba(255, 255, 255, 0.04);
-    --sidebar-item-active: rgba(255, 255, 255, 0.08);
-
-    /* ==========================================================================
-     3. Expanded Accent States (The Warm Amber Scale)
-     ========================================================================== */
-    --primary-accent-hover: hsl(38, 90%, 60%);
-    /* Brighter for button hovers */
-    --primary-accent-active: hsl(38, 85%, 45%);
-    /* Deeper for clicks */
-
-    /* Crucial for file selections: a low-opacity amber backdrop */
-    --primary-accent-dim: hsl(38, 85%, 55%, 0.12);
-    --primary-accent-muted: hsl(38, 25%, 22%);
-    /* Subtle active tabs background */
-
-    /* ==========================================================================
-     4. Text Contrast Extensions
-     ========================================================================== */
-    --text-pure-white: hsl(0, 0%, 100%);
-    --text-on-accent: hsl(220, 13%, 9%);
-    /* Dark text for inside bright amber buttons */
-    --text-disabled: hsl(215, 10%, 40%);
-    /* Truly locked out label text */
-
-    /* ==========================================================================
-     5. Solid Borders & Focus Tokens
-     ========================================================================== */
-    --primary-border-solid: hsl(215, 12%, 20%);
-    /* Solid version of your transparent border */
-    --primary-border-focus: hsl(38, 85%, 55%);
-    /* Focus ring indicator using amber */
-    --primary-border-subtle: hsl(215, 12%, 24%);
 }
