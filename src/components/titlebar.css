@@ -1,11 +1,11 @@
 /* @import "../../variable.css"; */
 
 .Titlebar-window {
-    background-color: var(--primary-sidebar);
+    background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    height: 36px;
+    height: 48px; /* Windows 11 natural titlebar height */
 }
 
 .Titlebar-window button {
@@ -14,33 +14,21 @@
     padding: 0;
     margin: 0;
     min-width: 0;
-    /* TODO: Make this accent color */
     color: white;
     font-family: monospace;
     font-size: 14px;
-    width: 40px;
-    /* Please Make these , espesially height relative to the display size , currently it is too short */
-    height: 36px;
+    width: 46px; /* Windows 11 standard button width */
+    height: 100%; /* Spans the full height of the titlebar */
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     overflow: hidden;
-    transition: width 0.2s ease-in-out, opacity 0.2s ease-in-out, background-color 0.15s ease;
-}
-
-.Titlebar-window button:hover {
-    width: 120px;
-}
-
-.Titlebar-window:has(button:hover) button:not(:hover) {
-    width: 0;
-    opacity: 0;
-    pointer-events: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .Titlebar-window button:not(:last-child):hover {
-    background-color: rgb(87, 86, 86);
+    background-color: rgba(255, 255, 255, 0.08);
 }
 
 .Titlebar-window button:last-child:hover {

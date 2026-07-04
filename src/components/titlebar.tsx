@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import "./titlebar.css";
 
 const appWindow = getCurrentWindow();
-// This will return if the application is initially maximised or not
-const isInitiallyMaximized = await appWindow.isMaximized();
 
 export function TitleBar() {
     const [maximized, setMaximized] = useState(true);
+
+    useEffect(() => {
+        appWindow.isMaximized().then(isMax => {
+            setMaximized(isMax);
+        });
+    }, []);
 
     function close_window() {
         appWindow.close();
@@ -17,7 +21,7 @@ export function TitleBar() {
         appWindow.minimize();
     }
 
-    function handleMaximizeToggle(isMaximized) {
+    function handleMaximizeToggle(isMaximized: boolean) {
         const nextMaximized = !isMaximized;
         setMaximized(nextMaximized);
 
@@ -29,13 +33,13 @@ export function TitleBar() {
 
     return (
         <div className="Titlebar-window" data-tauri-drag-region>
-            <button onClick={handleMinimize}>
+            <button className="cursor-target" onClick={handleMinimize}>
                 <svg width="10" height="1" viewBox="0 0 10 1">
                     <rect width="10" height="1" fill="currentColor" />
                 </svg>
             </button>
 
-            <button onClick={() => handleMaximizeToggle(maximized)}>
+            <button className="cursor-target" onClick={() => handleMaximizeToggle(maximized)}>
                 {maximized ? (
                     <svg width="10" height="10" viewBox="0 0 10 10">
                         <path
@@ -50,7 +54,7 @@ export function TitleBar() {
                 )}
             </button>
 
-            <button onClick={close_window}>
+            <button className="cursor-target" onClick={close_window}>
                 <svg width="10" height="10" viewBox="0 0 10 10">
                     <path
                         d="M10 .707L9.293 0 5 4.293.707 0 0 .707 4.293 5 0 9.293l.707.707L5 5.707 9.293 10l.707-.707L5.707 5z"
@@ -60,4 +64,4 @@ export function TitleBar() {
             </button>
         </div>
     );
-}
+}
